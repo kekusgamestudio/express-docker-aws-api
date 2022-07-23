@@ -2,6 +2,8 @@ const { request, response } = require('express');
 const fs = require('fs');
 const express = require('express');
 
+const fileName = './store/todos.json';
+
 const app = express();
 
 app.get('/', (request, response) => {
@@ -9,12 +11,20 @@ app.get('/', (request, response) => {
 })
 
 app.get('/todos', (request, response) => {
-  fs.readFile('./store/todos.json', 'utf-8', (err, data) => {
+  const showPendingOnly = request.query.show_pending;
+
+  fs.readFile(fileName, 'utf-8', (err, data) => {
     if (err) {
       return response.status(500).send('Something went wrong');
     }
     const todos = JSON.parse(data);
-    return response.json({ todos: todos });
+
+    if (showPendingOnly === 'true') {
+      return response.json({ todos: todos.filter(t => { return t.complete === false }) });
+    } else {
+      return response.json({ todos: todos });
+    }
+
   });
 })
 
@@ -29,7 +39,7 @@ app.put('/todos/:id/complete', (request, response) => {
     return -1
   }
 
-  fs.readFile('./store/todos.json', 'utf-8', (err, data) => {
+  fs.readFile(fileName, 'utf-8', (err, data) => {
     if (err) {
       return response.status(500).send('Something went wrong');
     }
