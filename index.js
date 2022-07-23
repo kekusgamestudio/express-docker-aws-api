@@ -33,17 +33,20 @@ app.put('/todos/:id/complete', (request, response) => {
     if (err) {
       return response.status(500).send('Something went wrong');
     }
+
     const todos = JSON.parse(data);
     const idx = findTodoById(todos, id);
-    if (idx >= 0) {
-      todos[idx].complete = true;
-      fs.writeFile('./store/todos.json', JSON.stringify(todos), () => {
-        return 'ok';
-      });
+
+    if (idx === -1) {
+      return response.status(404).send('Index not found');
+
     }
-    return response.status(404).send('Index not found');
 
-
+    todos[idx].complete = true;
+    fs.writeFile('./store/todos.json', JSON.stringify(todos), () => {
+      console.log('File item updated');
+      return response.json({ 'status': 'ok' });
+    });
   });
 })
 
