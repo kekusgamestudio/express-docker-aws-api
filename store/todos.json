@@ -1,1 +1,1 @@
-[{"id":1,"name":"Sergio","complete":true},{"id":2,"name":"Gustavo","complete":false},{"id":3,"name":"Jorgito","complete":false}]
+[{"id":1,"name":"Complete this curse","complete":true},{"id":2,"name":"Watch series","complete":false},{"id":3,"name":"Look for new curses","complete":false},{"id":4,"complete":false,"name":"Complete JS curse"},{"id":5,"complete":false,"name":"Complete JS curse"},{"id":6,"complete":false,"name":"Complete React curse"},{"id":7,"complete":false,"name":"Complete Nest curse"}]
